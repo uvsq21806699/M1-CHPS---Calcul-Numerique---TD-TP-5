@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "lib_poisson1d.h": "c",
+        "blaslapack_headers.h": "c"
+    }
+}
