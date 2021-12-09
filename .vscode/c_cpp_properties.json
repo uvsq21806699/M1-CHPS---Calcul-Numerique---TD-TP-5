@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/TP_Poisson_C_for_students/include"
+                "${workspaceFolder}/TP_Poisson_C_for_students/include",
+                "/usr/include/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-6.0",

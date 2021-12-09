@@ -17,4 +17,7 @@ Elle indique que le tebleau manipulé est stocké en par colonne
 La leading dimension correspond, pour un stockage par ligne, à la longueur d'une ligne soit le nombre de colonnes soit le pas pour changer de ligne en se déplaçant dans le tableau 1D
 
 4.
-dgbsv résoult le système Ax = b sur des matrice General Band de doubles
+dgbsv résoult le système Ax = b sur des matrice General Band de doubles. Elle implémente la factorisation LU
+
+5.
+Ont à besoin de kv qui designe un vecteur de travail

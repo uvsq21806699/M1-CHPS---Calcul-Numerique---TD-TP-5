@@ -6,9 +6,56 @@
 #include "lib_poisson1D.h"
 
 void set_GB_operator_rowMajor_poisson1D(double* AB, int *lab, int *la){
+  int i=0, j, k;
+  for (j=0;j<(*la);j++) { 
+    AB[i+j] = 0;
+  }
+  i += j;
+  for (j=0;j<(*la);j++) { 
+    AB[i+j] = -1;
+  }
+  i += j;
+  for (j=0;j<(*la);j++) { 
+    AB[i+j] = -1;
+  }
+  i += j;
+  for (j=0;j<(*la);j++) { 
+    AB[i+j] = -1;
+  }
+  i += j;
+  AB[0] = 0;
+  AB[*la]=0;
 
+  AB[i-1] = 0;
   //TODO
 }
+
+//My
+void print_1D(double *AB, int lab, int la) {
+  printf("[ ");
+  for (int j=0;j<lab*la;j++) {
+    printf("%2.0lf ", AB[j]);
+  }
+  printf("]\n");
+}
+
+//My
+void print_col_major(double* AB, int lab, int la) {
+  int i,j,k;
+  for (i=0;i<lab;i++) {
+    printf("[ ");
+    for (j=0;j<la;j++) {
+      printf("%2.0lf ",AB[j*lab+i]);
+    }
+    printf("]\n");
+  }
+}
+
+//My
+void print_row(double* AB, int *lab, int *la) {
+  
+}
+
 void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv){
   int ii, jj, kk;
   for (jj=0;jj<(*la);jj++){

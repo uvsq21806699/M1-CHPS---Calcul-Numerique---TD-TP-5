@@ -11,18 +11,18 @@ int main(int argc,char *argv[])
   int ierr;
   int jj;
   int nbpoints, la;
-  int ku, kl, kv, lab;
+  int ku, kl, kv, lab;  //upper diag, lower diag, ajout 0 devant ligne bande , nb ligne stocage bande
   int *ipiv;
   int info;
   int NRHS;
   double T0, T1;
   double *RHS, *EX_SOL, *X;
-  double *AB;
+  double *AB;   //Stockage bande de A
 
   double temp, relres;
 
   NRHS=1;
-  nbpoints=102;
+  nbpoints=12;
   la=nbpoints-2;
   T0=-5.0;
   T1=5.0;
@@ -36,14 +36,14 @@ int main(int argc,char *argv[])
   set_dense_RHS_DBC_1D(RHS,&la,&T0,&T1);
   set_analytical_solution_DBC_1D(EX_SOL, X, &la, &T0, &T1);
   
-  write_vec(RHS, &la, "RHS.dat");
-  write_vec(EX_SOL, &la, "EX_SOL.dat");
-  write_vec(X, &la, "X_grid.dat");
+  write_vec(RHS, &la, "RHS.dat");         //
+  write_vec(EX_SOL, &la, "EX_SOL.dat");   // Juste écriture dans des fichiers
+  write_vec(X, &la, "X_grid.dat");        //
 
   kv=1;
   ku=1;
   kl=1;
-  lab=kv+kl+ku+1;
+  lab=kv+kl+ku+1;   //lab = nb bande inf + nb bande sup + nb 0 suppl devnt ligne + diag
 
   AB = (double *) malloc(sizeof(double)*lab*la);
 
@@ -52,11 +52,13 @@ int main(int argc,char *argv[])
   /* working array for pivot used by LU Factorization */
   ipiv = (int *) calloc(la, sizeof(int));
 
-  int row = 0; //
+  int row = 1; //
 
   if (row == 1){ // LAPACK_ROW_MAJOR
     set_GB_operator_rowMajor_poisson1D(AB, &lab, &la);
     //write_GB_operator_rowMajor_poisson1D(AB, &lab, &la, "AB_row.dat");
+
+    print_1D(AB, lab, la);
     
     info = LAPACKE_dgbsv(LAPACK_ROW_MAJOR,la, kl, ku, NRHS, AB, la, ipiv, RHS, NRHS);
   
@@ -64,6 +66,10 @@ int main(int argc,char *argv[])
   else { // LAPACK_COL_MAJOR
     set_GB_operator_colMajor_poisson1D(AB, &lab, &la, &kv);
     //write_GB_operator_colMajor_poisson1D(AB, &lab, &la, "AB_col.dat");
+
+    print_1D(AB, lab, la);
+    printf("\n");
+    print_col_major(AB, lab, la);
 
     info = LAPACKE_dgbsv(LAPACK_COL_MAJOR,la, kl, ku, NRHS, AB, lab, ipiv, RHS, la);
   }    
