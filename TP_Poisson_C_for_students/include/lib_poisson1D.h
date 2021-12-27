@@ -25,3 +25,7 @@ double eigmax_poisson1D(int *la);
 double eigmin_poisson1D(int *la);
 double richardson_alpha_opt(int *la);
 void richardson_alpha(double *AB, double *RHS, double *X, double *alpha_rich, int *lab, int *la,int *ku, int*kl, double *tol, int *maxit);
+
+void print_1D(double *AB, int lab, int la);
+void print_col_major(double* AB, int lab, int la);
+void print_raw_major(double *AB, int lab, int la);
